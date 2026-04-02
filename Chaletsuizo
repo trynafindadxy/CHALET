@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chalet Suizo | Galería Interactiva</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --cafe-oscuro: #3C2A21;
+            --cafe-medio: #5E454B;
+            --cafe-claro: #D5CEA3;
+            --crema: #E5E5CB;
+            --blanco: #FFFFFF;
+            --sombra-texto: rgba(0, 0, 0, 0.8);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Montserrat', sans-serif; }
+        body { background-color: var(--blanco); color: var(--cafe-oscuro); line-height: 1.6; }
+
+        /* --- Barra de Navegación --- */
+        nav {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 20px 10%; background: var(--cafe-oscuro); color: var(--crema);
+            position: sticky; top: 0; z-index: 1000;
+        }
+        nav .logo { font-family: 'Playfair Display', serif; font-size: 1.5rem; letter-spacing: 2px; }
+
+        .hero {
+            height: 60vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
+                        url("file:///C:/Users/maryc/Downloads/20221105_132834.jpg.jpeg"); 
+            background-size: cover; background-position: center;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            text-align: center; color: var(--blanco); padding: 0 20px;
+        }
+        .hero h1 { font-family: 'Playfair Display', serif; font-size: 3.5rem; text-shadow: 2px 2px 15px var(--sombra-texto); }
+
+        .featured-container {
+            display: flex; padding: 60px 10%; gap: 50px; align-items: flex-start; flex-wrap: wrap;
+        }
+
+        .gallery-wrapper { flex: 1; min-width: 350px; }
+        
+        .slider-container {
+            position: relative; overflow: hidden; border-radius: 15px;
+            box-shadow: 15px 15px 0px var(--cafe-claro); aspect-ratio: 4/3; cursor: zoom-in;
+        }
+
+        .slider {
+            display: flex; width: 500%; 
+            height: 100%; animation: slide 20s infinite ease-in-out;
+        }
+
+        .slider img { width: 20%; height: 100%; object-fit: cover; }
+
+        @keyframes slide {
+            0%, 15% { transform: translateX(0); }
+            20%, 35% { transform: translateX(-20%); }
+            40%, 55% { transform: translateX(-40%); }
+            60%, 75% { transform: translateX(-60%); }
+            80%, 95% { transform: translateX(-80%); }
+            100% { transform: translateX(0); }
+        }
+
+        /* --- Cuadro de texto debajo del carrusel --- */
+        .info-extra-box {
+            margin-top: 35px;
+            padding: 25px;
+            background-color: var(--crema);
+            border-radius: 15px;
+            border: 1px dashed var(--cafe-medio);
+        }
+
+        .modal {
+            display: none; position: fixed; z-index: 2000; top: 0; left: 0;
+            width: 100%; height: 100%; background: rgba(0,0,0,0.9);
+            justify-content: center; align-items: center;
+        }
+        .modal-content { max-width: 90%; max-height: 80%; border-radius: 10px; border: 3px solid var(--crema); }
+        .close-modal { position: absolute; top: 30px; right: 50px; color: white; font-size: 40px; cursor: pointer; }
+
+        .featured-details {
+            flex: 1.2; min-width: 350px; background: #FDFDFD; padding: 40px;
+            border-radius: 15px; border-left: 8px solid var(--cafe-oscuro);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+        }
+        .featured-details h2 { font-family: 'Playfair Display', serif; font-size: 2rem; margin-bottom: 20px; border-bottom: 2px solid var(--cafe-claro); padding-bottom: 10px; }
+        .detail-section { margin-bottom: 20px; }
+        .detail-list { list-style: none; font-size: 0.9rem; }
+        .btn-reserva {
+            display: block; width: 100%; padding: 15px; background: var(--cafe-oscuro);
+            color: var(--crema); text-align: center; text-decoration: none; font-weight: 600;
+            border-radius: 8px; margin-top: 20px; transition: 0.3s;
+        }
+
+        /* Estilo para la lista de tarifas */
+        .tarifas-list li {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.2rem; }
+            .featured-container { padding: 30px 5%; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav><div class="logo">Chalet Suizo</div></nav>
+
+    <header class="hero">
+        <h1>Refugio privado de inspiración Alpina</h1>
+        <p>"Donde el tiempo se detiene y la naturaleza comienza"</p>
+    </header>
+
+    <section class="featured-container">
+        <div class="gallery-wrapper">
+            <p style="margin-bottom: 10px; font-size: 0.8rem; color: var(--cafe-medio);"> Haz clic en las imágenes para ampliar</p>
+            <div class="slider-container" onclick="openZoom()">
+                <div class="slider" id="mainSlider">
+                    <img src="file:///C:/Users/maryc/Downloads/20260202_164455.jpg.jpeg" alt="Fachada 1" class="zoomable">
+                    <img src="file:///C:/Users/maryc/Downloads/20260202_164433.jpg.jpeg" alt="Interior" class="zoomable">
+                    <img src="file:///C:/Users/maryc/Downloads/20221105_131831.jpg.jpeg" alt="Mezzanine" class="zoomable">
+                    <img src="file:///C:/Users/maryc/Downloads/20260202_164546.jpg.jpeg" alt="Terraza" class="zoomable">
+                    <img src="file:///C:/Users/maryc/Downloads/20260202_164949.jpg.jpeg" alt="Fogatero" class="zoomable">
+                </div>
+            </div>
+
+            <div class="info-extra-box">
+                <h3>Tu estancia ideal</h3>
+                <p>Ubicado en La Trinidad zona emblemática por sus minas de ópalo y a una distancia de 15 min del centro de Tequisquiapan. 
+Nuestro Chale fusiona el diseño alpino con la arquitectura mexicana moderna. Un refugio diseñado para el relax absoluto, ideal para parejas, familias o grupos selectos que buscan reconectar.</p>
+            </div>
+        </div>
+
+        <div class="featured-details">
+            <h2>Detalles del Chalet</h2> 
+            
+            <div class="detail-section">
+            
+            </div>
+
+            <div class="detail-section">
+                <h3>🏠 Planta Baja</h3>
+                <ul class="detail-list">
+                    <li>🍳 Cocineta equipada, estufa 4 quemadores, frigobar.</li>
+                    <li>🚿 Baño completo (ecotecnología-solar 🔆).</li>
+                    <li>🛋️ Salita de estar con sofá cama y terraza.</li>
+                </ul>
+            </div>
+            <div class="detail-section">
+                <h3>🪜 Mezzanine</h3>
+                <ul class="detail-list">
+                    <li>🛌 Dos camas matrimoniales.</li>
+                    <li>🏞️ Terraza con vista al valle del Salto (ANP).</li>
+                </ul>
+            </div>
+            <div class="detail-section">
+                <h3>🌳 Exterior</h3>
+                <ul class="detail-list">
+                    <li>❤️‍🔥 Fogatero para noches estrelladas.</li>
+                    <li>🚗 Estacionamiento privado.</li>
+                </ul>
+                 <h3>💰 Tarifas</h3>
+                <ul class="detail-list tarifas-list">
+                    <li><span>Viernes a Domingo-3 personas</span> <strong>$1,500 MXN</strong></li>
+                    <li><span>Petfriendly</span> <strong>$150 MXN</strong></li>
+                    <li><span>Persona adicional(Por noche)</span> <strong>$500 MXN</strong></li>
+                </ul>
+            </div>
+            <a href="https://wa.me/524141180202" class="btn-reserva">Reservar vía WhatsApp</a>
+        </div>
+    </section>
+
+    <div id="zoomModal" class="modal" onclick="closeZoom()">
+        <span class="close-modal">&times;</span>
+        <img class="modal-content" id="imgZoomed">
+    </div>
+
+    <script>
+        function openZoom() {
+            const slider = document.getElementById('mainSlider');
+            const modal = document.getElementById('zoomModal');
+            const zoomedImg = document.getElementById('imgZoomed');
+            
+            const style = window.getComputedStyle(slider);
+            const matrix = new WebKitCSSMatrix(style.transform);
+            const currentLeft = Math.abs(matrix.m41);
+            const width = slider.offsetWidth / 5;
+            const index = Math.round(currentLeft / width);
+            
+            const images = document.querySelectorAll('.zoomable');
+            zoomedImg.src = images[index].src;
+            modal.style.display = "flex";
+        }
+
+        function closeZoom() {
+            document.getElementById('zoomModal').style.display = "none";
+        }
+    </script>
+</body>
+</html>
